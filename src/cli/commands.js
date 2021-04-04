@@ -30,4 +30,18 @@ module.exports = {
 			}
 		},
 	},
+
+	clock: {
+		handler: async () => {
+			const responses = await Promise.all(
+				state.nodes.map(async (id) =>
+					axios.get(`${getUrlForNode(id)}/clock`).then((res) => res.data)
+				)
+			);
+
+			for (const response of responses) {
+				logger.info(response);
+			}
+		},
+	},
 };
