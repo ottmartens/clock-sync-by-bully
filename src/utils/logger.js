@@ -9,10 +9,10 @@ module.exports = createLogger({
 			const nodeId = process.env.id;
 
 			if (nodeId) {
-				return `${timestamp} [${level}] Node ${nodeId.padEnd(4)} - ${message}`;
+				return `${timestamp} [${level}] Node ${nodeId.padEnd(4)} ${message}`;
 			}
 
-			return `${timestamp} [${level}] \t   - ${message}`;
+			return `${timestamp} [${level}] \t   ${message}`;
 		})
 	),
 });

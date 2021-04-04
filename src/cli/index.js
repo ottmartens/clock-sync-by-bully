@@ -4,7 +4,7 @@ const commands = require('./commands');
 
 function printHelp() {
 	for (const [commandName, { args }] of Object.entries(commands)) {
-		console.log(`\t ${commandName} ${args.map((s) => `<${s}> `)}`);
+		console.log(`\t ${commandName} ${args?.map((s) => `<${s}> `) || ''}`);
 	}
 }
 
@@ -19,7 +19,8 @@ async function executeCommand(args) {
 		return;
 	}
 
-	const validArgs = command.validate(commandArgs);
+	const validArgs = command.validate ? command.validate(commandArgs) : true;
+
 	if (!validArgs) {
 		console.log(`Invalid arguments for ${commandName}`);
 
@@ -50,9 +51,9 @@ function run() {
 		}
 	});
 
-	console.log('\n Now ready to accept commands. Available commands:');
+	console.log('\n Now ready to accept commands. Available commands: \n ');
 	printHelp();
-    console.log('');
+	console.log('');
 }
 
 module.exports = {

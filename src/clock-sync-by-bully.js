@@ -1,6 +1,11 @@
-const { parseInputFile, spawnNode } = require('./utils');
+const {
+	parseInputFile,
+	spawnNode,
+	helpers: { delay },
+} = require('./utils');
+
 const cli = require('./cli');
-const { delay } = require('./utils/helpers');
+const state = require('./state');
 
 async function bootstrap() {
 	const inputFile = process.argv[2];
@@ -9,11 +14,12 @@ async function bootstrap() {
 
 	for (const node of nodes) {
 		spawnNode(node);
-        await delay(50);
+		await delay(50);
 	}
 
+	state.nodes = nodes.map(({ id }) => Number(id));
 
-    await delay(500);
+	await delay(500);
 }
 
 async function main() {
