@@ -3,38 +3,25 @@ const readline = require('readline');
 
 module.exports = async function parseInputFile(fileName) {
 	return await new Promise((resolve) => {
+		const response = [];
 
 		const readInterface = readline.createInterface({
 			input: fs.createReadStream(fileName),
 		});
 
 		readInterface.on('line', (line) => {
-			// if (line.startsWith('#')) {
-			// 	return;
-			// }
+			const [id, nameWithCounter, time] = line.replace(/\s/g, '').split(',');
 
-			// if (!keySpace) {
-			// 	keySpace = line.split(',').map(Number);
-			// 	return;
-			// }
+			const [name, counter] = nameWithCounter.split('_');
 
-			// if (!nodes) {
-			// 	nodes = line.split(',').map(Number);
-			// 	return;
-			// }
-
-			// if (!shortcuts) {
-			// 	shortcuts = line.split(',').map((string) => {
-			// 		const [start, end] = string.split(':').map(Number);
-
-			// 		return {
-			// 			start,
-			// 			end,
-			// 		};
-			// 	});
-
-			// 	resolve({ keySpace, nodes, shortcuts });
-			// }
+			response.push({
+				id,
+				name,
+				counter,
+				time,
+			});
 		});
+
+		readInterface.on('close', () => resolve(response));
 	});
 };

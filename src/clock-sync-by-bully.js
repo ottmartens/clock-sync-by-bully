@@ -9,6 +9,9 @@ async function bootstrap() {
 	const inputFile = process.argv[2];
 
 	const input = await parseInputFile(inputFile);
+
+
+    console.log(input);
     
 	
 }
