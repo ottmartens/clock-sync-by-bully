@@ -1,9 +1,9 @@
 const nodeData = require('../../nodeData');
 
 module.exports = (req, res) => {
-	const response = `${nodeData.id},${nodeData.name}_${nodeData.counter}${
-		nodeData.isCoordinator ? '(Coordinator)' : ''
-	}`;
+	const coordinatorString = nodeData.isCoordinator ? ' (Coordinator)' : '';
+
+	const response = `${nodeData.id}, ${nodeData.name}_${nodeData.counter}${coordinatorString}`;
 
 	res.send(response);
 };
