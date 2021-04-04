@@ -1,11 +1,11 @@
 const { exec } = require('child_process');
 const logger = require('./logger');
 
-module.exports = function spawnNode({ id }) {
+module.exports = function spawnNode({ id, name, counter, time }) {
 	const nodeProcess = exec(
 		`node  ./src/node/index.js`,
 		{
-			// env: { id, shortcuts, keySpace, gatewayNode },
+			env: { id, name, counter, time },
 		},
 		() => {
 			logger.info(`Node ${id} exited`);

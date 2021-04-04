@@ -1,5 +1,6 @@
 const express = require('express');
 
+const logger = require('../utils/logger');
 const nodeData = require('./nodeData');
 
 const app = express();
@@ -9,4 +10,4 @@ require('./routes')(app);
 
 const port = 3000 + nodeData.id;
 
-app.listen(port, () => console.log('alive'));
+app.listen(port, () => logger.info('started'));
