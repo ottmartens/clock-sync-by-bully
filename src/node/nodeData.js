@@ -8,17 +8,21 @@ const nodeData = {
 	name: process.env.name,
 	counter: Number(process.env.counter),
 	coordinator: null,
-	clock: Number(process.env.time.split(":")[0]) * HOUR +
-		Number(process.env.time.split(":")[1]) * MINUTE,
+	time: parseTime(process.env.time),
 };
 
 setInterval(() => {
-	nodeData.clock = (nodeData.clock + MINUTE) % DAY
+	nodeData.time = (nodeData.time + MINUTE) % DAY
 }, MINUTE)
 
+
+function parseTime(time) {
+	return Number(time.split(":")[0]) * HOUR +
+		Number(time.split(":")[1]) * MINUTE
+}
 function formatTime() {
-	const minutes = (nodeData.clock % HOUR / MINUTE).toString()
-	return `${Math.floor(nodeData.clock / HOUR)}:${minutes.length === 1 ? "0" + minutes : minutes}`
+	const minutes = (nodeData.time % HOUR / MINUTE).toString()
+	return `${Math.floor(nodeData.time / HOUR)}:${minutes.length === 1 ? "0" + minutes : minutes}`
 }
 
 module.exports = {
@@ -34,7 +38,10 @@ module.exports = {
 	get isCoordinator() {
 		return nodeData.id === nodeData.coordinator;
 	},
-	get clock() {
+	set time(newTime) {
+		nodeData.time = parseTime(newTime)
+	},
+	get time() {
 		return formatTime()
 	}
 };

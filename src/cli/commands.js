@@ -44,4 +44,18 @@ module.exports = {
 			}
 		},
 	},
+
+	setTime: {
+		args: ['node id', 'new time'],
+		validate: (commandArgs) => {
+			return commandArgs.length === 2 && !isNaN(Number(commandArgs[0]))
+				&& /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(commandArgs[1]);
+		},
+		handler: async (id, time) => {
+			const nodeId = Number(id);
+			const response = await axios.post(`${getUrlForNode(nodeId)}/setTime`, { time }).then((res) => res.data)
+
+			logger.info(response);
+		},
+	},
 };
