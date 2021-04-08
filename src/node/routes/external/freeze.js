@@ -1,9 +1,16 @@
 const nodeData = require('../../nodeData');
 
 module.exports = (req, res) => {
-	nodeData.stopClock();
+	let response;
 
-	const response = `Time was stopped! Time is ${nodeData.time}`;
+	if (!nodeData.isFrozen) {
+		nodeData.stopClock();
+		nodeData.isFrozen = true
+
+		response = `Process ${nodeData.name} was frozen! Time is ${nodeData.time}`;
+	} else {
+		response = `Process ${nodeData.name} was already frozen!`
+	}
 
 	res.send(response);
 };

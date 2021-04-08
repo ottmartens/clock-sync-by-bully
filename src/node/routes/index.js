@@ -4,6 +4,7 @@ module.exports = (app) => {
 	app.get('/clock', require('./external/clock'));
 	app.post('/setTime', require('./external/setTime'));
 	app.post('/freeze', require('./external/freeze'));
+	app.post('/unfreeze', require('./external/unfreeze'));
 
 	// internal
 };

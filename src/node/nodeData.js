@@ -10,6 +10,7 @@ const nodeData = {
 	coordinator: null,
 	time: parseTime(process.env.time),
 	clock: null,
+	isFrozen: false
 };
 
 function startClock() {
@@ -17,7 +18,6 @@ function startClock() {
 		nodeData.time = (nodeData.time + MINUTE) % DAY
 	}, MINUTE)
 }
-
 function stopClock() {
 	clearInterval(clock);
 }
@@ -49,6 +49,12 @@ module.exports = {
 	},
 	get time() {
 		return formatTime()
+	},
+	set isFrozen(newState) {
+		nodeData.isFrozen = newState
+	},
+	get isFrozen() {
+		return nodeData.isFrozen
 	},
 
 	startClock,
