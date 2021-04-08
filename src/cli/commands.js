@@ -45,6 +45,21 @@ module.exports = {
 		},
 	},
 
+	kill: {
+		args: ['node id'],
+		validate: (commandArgs) => {
+			return commandArgs.length === 1 && !isNaN(Number(commandArgs[0]))
+		},
+		handler: async (id) => {
+			const nodeId = Number(id);
+			const response = await axios.post(`${getUrlForNode(nodeId)}/kill`).then((res) => res.data)
+
+			logger.info(response);
+
+			state.nodes = state.nodes.filter((node) => node !== nodeId)
+		},
+	},
+
 	setTime: {
 		args: ['node id', 'new time'],
 		validate: (commandArgs) => {
