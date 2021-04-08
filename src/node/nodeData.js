@@ -9,12 +9,18 @@ const nodeData = {
 	counter: Number(process.env.counter),
 	coordinator: null,
 	time: parseTime(process.env.time),
+	clock: null,
 };
 
-setInterval(() => {
-	nodeData.time = (nodeData.time + MINUTE) % DAY
-}, MINUTE)
+function startClock() {
+	clock = setInterval(() => {
+		nodeData.time = (nodeData.time + MINUTE) % DAY
+	}, MINUTE)
+}
 
+function stopClock() {
+	clearInterval(clock);
+}
 
 function parseTime(time) {
 	return Number(time.split(":")[0]) * HOUR +
@@ -43,5 +49,8 @@ module.exports = {
 	},
 	get time() {
 		return formatTime()
-	}
+	},
+
+	startClock,
+	stopClock
 };

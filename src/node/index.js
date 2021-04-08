@@ -3,6 +3,8 @@ const express = require('express');
 const logger = require('../utils/logger');
 const nodeData = require('./nodeData');
 
+nodeData.startClock();
+
 const app = express();
 app.use(express.json());
 
