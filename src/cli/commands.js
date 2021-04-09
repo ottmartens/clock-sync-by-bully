@@ -3,7 +3,9 @@ const axios = require('axios');
 const state = require('../state');
 const {
 	logger,
-	helpers: { getUrlForNode },
+	helpers: { getUrlForNode, delay },
+	parseInputFile,
+	spawnNode
 } = require('../utils');
 
 module.exports = {
@@ -97,6 +99,25 @@ module.exports = {
 			const response = await axios.post(`${getUrlForNode(nodeId)}/unfreeze`).then((res) => res.data)
 
 			logger.info(response);
+		},
+	},
+
+	reload: {
+		handler: async () => {
+			const inputFile = process.argv[2];
+
+			const nodes = await parseInputFile(inputFile);
+
+			for (const node of nodes) {
+				if (!state.nodes.find(oldNode => oldNode === Number(node.id))) {
+					spawnNode(node);
+					await delay(50);
+				}
+			}
+
+			state.nodes = nodes.map(({ id }) => Number(id));
+
+			await delay(500);
 		},
 	},
 };
