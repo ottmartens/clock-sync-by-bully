@@ -14,12 +14,12 @@ const nodeData = {
 };
 
 function startClock() {
-	clock = setInterval(() => {
+	nodeData.clock = setInterval(() => {
 		nodeData.time = (nodeData.time + MINUTE) % DAY
 	}, MINUTE)
 }
 function stopClock() {
-	clearInterval(clock);
+	clearInterval(nodeData.clock);
 }
 
 function parseTime(time) {
