@@ -12,12 +12,14 @@ async function bootstrap() {
 
 	const nodes = await parseInputFile(inputFile);
 
+	const nodeIds = nodes.map(({ id }) => Number(id));
+
 	for (const node of nodes) {
-		spawnNode(node);
+		spawnNode(node, nodeIds);
 		await delay(50);
 	}
 
-	state.nodes = nodes.map(({ id }) => Number(id));
+	state.nodes = nodeIds;
 
 	await delay(500);
 }

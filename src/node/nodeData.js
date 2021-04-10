@@ -1,7 +1,7 @@
-const SECOND = 1000
-const MINUTE = 60 * SECOND
-const HOUR = 60 * MINUTE
-const DAY = 24 * HOUR
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
 
 const nodeData = {
 	id: Number(process.env.id),
@@ -10,25 +10,30 @@ const nodeData = {
 	coordinator: null,
 	time: parseTime(process.env.time),
 	clock: null,
-	isFrozen: false
+	isFrozen: false,
+	nodeIds: JSON.parse(process.env.nodeIds),
+	participatedElections: new Set(),
 };
 
 function startClock() {
 	nodeData.clock = setInterval(() => {
-		nodeData.time = (nodeData.time + MINUTE) % DAY
-	}, MINUTE)
+		nodeData.time = (nodeData.time + MINUTE) % DAY;
+	}, MINUTE);
 }
 function stopClock() {
 	clearInterval(nodeData.clock);
 }
 
 function parseTime(time) {
-	return Number(time.split(":")[0]) * HOUR +
-		Number(time.split(":")[1]) * MINUTE
+	return (
+		Number(time.split(':')[0]) * HOUR + Number(time.split(':')[1]) * MINUTE
+	);
 }
 function formatTime() {
-	const minutes = (nodeData.time % HOUR / MINUTE).toString()
-	return `${Math.floor(nodeData.time / HOUR)}:${minutes.length === 1 ? "0" + minutes : minutes}`
+	const minutes = ((nodeData.time % HOUR) / MINUTE).toString();
+	return `${Math.floor(nodeData.time / HOUR)}:${
+		minutes.length === 1 ? '0' + minutes : minutes
+	}`;
 }
 
 module.exports = {
@@ -45,18 +50,22 @@ module.exports = {
 		return nodeData.id === nodeData.coordinator;
 	},
 	set time(newTime) {
-		nodeData.time = parseTime(newTime)
+		nodeData.time = parseTime(newTime);
 	},
 	get time() {
-		return formatTime()
+		return formatTime();
 	},
 	set isFrozen(newState) {
-		nodeData.isFrozen = newState
+		nodeData.isFrozen = newState;
 	},
 	get isFrozen() {
-		return nodeData.isFrozen
+		return nodeData.isFrozen;
 	},
+	get nodeIds() {
+		return nodeData.nodeIds;
+	},
+	participatedElections: nodeData.participatedElections,
 
 	startClock,
-	stopClock
+	stopClock,
 };

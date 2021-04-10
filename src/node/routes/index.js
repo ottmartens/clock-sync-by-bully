@@ -8,4 +8,5 @@ module.exports = (app) => {
 	app.post('/unfreeze', require('./external/unfreeze'));
 
 	// internal
+	app.post('/election', require('./internal/election'));
 };
