@@ -9,4 +9,5 @@ module.exports = (app) => {
 
 	// internal
 	app.post('/election', require('./internal/election'));
+	app.post('/new-coordinator', require('./internal/newCoordinator'));
 };

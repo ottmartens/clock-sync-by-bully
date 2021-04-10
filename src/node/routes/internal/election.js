@@ -28,30 +28,45 @@ module.exports = async (req, res) => {
 
 	nodeData.participatedElections.add(electionId);
 
-	let largerNodeAknowledgements = 0;
+	const largerNodeAknowledgements = await pingAllLargerNodes(electionId);
 
+	if (largerNodeAknowledgements === 0) {
+		// Allow all messages to propagate before announcing the next leader
+		setTimeout(() => {
+			logger.info('will become next coordinator');
+			broadcastNewCoordinator();
+		}, 200);
+	}
+};
+
+async function pingAllLargerNodes(electionId) {
 	const queryLargerNodes = nodeData.nodeIds
 		.filter((id) => id > nodeData.id)
 		.map((id) =>
 			axios
 				.post(`${getUrlForNode(id)}/election`, {
 					caller: nodeData.id,
-					electionId: req.body.electionId,
+					electionId,
 				})
 				.then((res) => res.data)
-				.catch(() => null)
+				.catch(() => {})
 		);
 
 	const responses = await Promise.all(queryLargerNodes);
 
-	largerNodeAknowledgements = responses.filter((response) => !!response).length;
+	return responses.filter((response) => !!response).length;
+}
 
-	if (largerNodeAknowledgements === 0) {
-		// Allow all messages to propagate before announcing the next leader
-		setTimeout(() => {
-			logger.info('Will become next coordinator');
-
-			// TODO: pass new elected node to all other nodes
-		}, 200);
-	}
-};
+async function broadcastNewCoordinator() {
+	Promise.all(
+		nodeData.nodeIds
+			.filter((id) => id < nodeData.id)
+			.map((id) => {
+				axios
+					.post(`${getUrlForNode(id)}/new-coordinator`, {
+						newCoordinator: nodeData.id,
+					})
+					.catch(() => {});
+			})
+	);
+}
