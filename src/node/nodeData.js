@@ -49,9 +49,9 @@ module.exports = {
 	get isCoordinator() {
 		return nodeData.id === nodeData.coordinator;
 	},
-    set coordinator(id) {
-        nodeData.coordinator = id;
-    },
+	set coordinator(id) {
+		nodeData.coordinator = id;
+	},
 	set time(newTime) {
 		nodeData.time = parseTime(newTime);
 	},

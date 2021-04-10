@@ -40,6 +40,7 @@ module.exports = async (req, res) => {
 		// Allow all messages to propagate before announcing the next leader
 		setTimeout(() => {
 			logger.info('will become next coordinator');
+			nodeData.coordinator = nodeData.id;
 			broadcastNewCoordinator();
 		}, 200);
 	}
