@@ -9,6 +9,8 @@ module.exports = (req, res) => {
 		nodeData.isFrozen = false
 
 		response = `Process ${nodeData.name} was unfrozen! Time is ${nodeData.time}`;
+
+        // TODO: handle starting election if needed
 	} else {
 		response = `Process ${nodeData.name} was already unfrozen!`
 	}

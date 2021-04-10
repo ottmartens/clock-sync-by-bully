@@ -5,7 +5,7 @@ const {
 	logger,
 	helpers: { getUrlForNode, delay },
 	parseInputFile,
-	spawnNode
+	spawnNode,
 } = require('../utils');
 
 module.exports = {
@@ -50,27 +50,34 @@ module.exports = {
 	kill: {
 		args: ['node id'],
 		validate: (commandArgs) => {
-			return commandArgs.length === 1 && !isNaN(Number(commandArgs[0]))
+			return commandArgs.length === 1 && !isNaN(Number(commandArgs[0]));
 		},
 		handler: async (id) => {
 			const nodeId = Number(id);
-			const response = await axios.post(`${getUrlForNode(nodeId)}/kill`).then((res) => res.data)
+			const response = await axios
+				.post(`${getUrlForNode(nodeId)}/kill`)
+				.then((res) => res.data);
 
 			logger.info(response);
 
-			state.nodes = state.nodes.filter((node) => node !== nodeId)
+			state.nodes = state.nodes.filter((node) => node !== nodeId);
 		},
 	},
 
 	setTime: {
 		args: ['node id', 'new time'],
 		validate: (commandArgs) => {
-			return commandArgs.length === 2 && !isNaN(Number(commandArgs[0]))
-				&& /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(commandArgs[1]);
+			return (
+				commandArgs.length === 2 &&
+				!isNaN(Number(commandArgs[0])) &&
+				/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/.test(commandArgs[1])
+			);
 		},
 		handler: async (id, time) => {
 			const nodeId = Number(id);
-			const response = await axios.post(`${getUrlForNode(nodeId)}/setTime`, { time }).then((res) => res.data)
+			const response = await axios
+				.post(`${getUrlForNode(nodeId)}/setTime`, { time })
+				.then((res) => res.data);
 
 			logger.info(response);
 		},
@@ -79,11 +86,13 @@ module.exports = {
 	freeze: {
 		args: ['node id'],
 		validate: (commandArgs) => {
-			return commandArgs.length === 1 && !isNaN(Number(commandArgs[0]))
+			return commandArgs.length === 1 && !isNaN(Number(commandArgs[0]));
 		},
 		handler: async (id) => {
 			const nodeId = Number(id);
-			const response = await axios.post(`${getUrlForNode(nodeId)}/freeze`).then((res) => res.data)
+			const response = await axios
+				.post(`${getUrlForNode(nodeId)}/freeze`)
+				.then((res) => res.data);
 
 			logger.info(response);
 		},
@@ -92,11 +101,13 @@ module.exports = {
 	unfreeze: {
 		args: ['node id'],
 		validate: (commandArgs) => {
-			return commandArgs.length === 1 && !isNaN(Number(commandArgs[0]))
+			return commandArgs.length === 1 && !isNaN(Number(commandArgs[0]));
 		},
 		handler: async (id) => {
 			const nodeId = Number(id);
-			const response = await axios.post(`${getUrlForNode(nodeId)}/unfreeze`).then((res) => res.data)
+			const response = await axios
+				.post(`${getUrlForNode(nodeId)}/unfreeze`)
+				.then((res) => res.data);
 
 			logger.info(response);
 		},
@@ -109,10 +120,12 @@ module.exports = {
 			const nodes = await parseInputFile(inputFile);
 
 			for (const node of nodes) {
-				if (!state.nodes.find(oldNode => oldNode === Number(node.id))) {
+				if (!state.nodes.find((oldNode) => oldNode === Number(node.id))) {
 					spawnNode(node);
 					await delay(50);
 				}
+
+				// TODO: pass updated nodes list to existing nodes (might contain previously nonexisting nodes)
 			}
 
 			state.nodes = nodes.map(({ id }) => Number(id));
