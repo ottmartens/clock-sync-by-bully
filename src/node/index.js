@@ -2,6 +2,7 @@ const express = require('express');
 
 const logger = require('../utils/logger');
 const nodeData = require('./nodeData');
+const clockSync = require('./clockSyncCron.js');
 
 nodeData.startClock();
 
@@ -10,12 +11,8 @@ app.use(express.json());
 
 require('./routes')(app);
 
-if (nodeData.id === 1) {
-	setTimeout(() => {
-		require('./startElection')();
-	}, 3000);
-}
-
 const port = 3000 + nodeData.id;
+
+clockSync.start();
 
 app.listen(port, () => logger.info('started'));

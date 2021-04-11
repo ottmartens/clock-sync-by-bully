@@ -46,6 +46,9 @@ module.exports = {
 	get counter() {
 		return nodeData.counter;
 	},
+	get coordinator() {
+		return nodeData.coordinator;
+	},
 	get isCoordinator() {
 		return nodeData.id === nodeData.coordinator;
 	},
