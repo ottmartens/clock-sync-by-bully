@@ -33,10 +33,9 @@ module.exports = async (req, res) => {
 		// logger.info('stopping cause already election message passed on');
 		return;
 	}
+	nodeData.participatedElections.add(electionId);
 
 	clockSync.stop();
-
-	nodeData.participatedElections.add(electionId);
 
 	const largerNodeAknowledgements = await pingAllLargerNodes(electionId);
 
@@ -69,6 +68,7 @@ async function pingAllLargerNodes(electionId) {
 }
 
 async function broadcastNewCoordinator() {
+	console.log(nodeData.nodeIds.filter((id) => id < nodeData.id));
 	Promise.all(
 		nodeData.nodeIds
 			.filter((id) => id < nodeData.id)
