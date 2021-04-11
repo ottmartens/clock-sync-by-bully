@@ -4,7 +4,9 @@ const commands = require('./commands');
 
 function printHelp() {
 	for (const [commandName, { args }] of Object.entries(commands)) {
-		console.log(`\t ${commandName} ${args?.map((s) => `<${s}> `) || ''}`);
+		console.log(
+			`\t ${commandName} ${args?.map((s) => `<${s}>`).join(' ') || ''}`
+		);
 	}
 }
 
