@@ -31,9 +31,9 @@ function parseTime(time) {
 }
 function formatTime() {
 	const minutes = ((nodeData.time % HOUR) / MINUTE).toString();
-	return `${Math.floor(nodeData.time / HOUR)}:${
-		minutes.length === 1 ? '0' + minutes : minutes
-	}`;
+	return `${Math.floor(nodeData.time / HOUR)
+		.toString()
+		.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
 }
 
 module.exports = {
