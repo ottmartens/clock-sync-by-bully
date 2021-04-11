@@ -8,7 +8,7 @@ module.exports = (req, res) => {
 
 	nodeData.coordinator = newCoordinator;
 
-	logger.debug(`acknowledging ${newCoordinator} as the new coordinator`);
+	logger.verbose(`acknowledging ${newCoordinator} as the new coordinator`);
 
 	clockSync.start();
 

@@ -1,7 +1,14 @@
 const { createLogger, transports, format } = require('winston');
 
+const debugLogging = process.argv[process.argv.length - 1] === 'debug';
+
 module.exports = createLogger({
-	transports: [new transports.Console({ colorize: true, level: 'debug' })],
+	transports: [
+		new transports.Console({
+			colorize: true,
+			level: debugLogging ? 'debug' : 'verbose',
+		}),
+	],
 	format: format.combine(
 		format.timestamp({ format: 'HH:mm:ss' }),
 		format.colorize(),

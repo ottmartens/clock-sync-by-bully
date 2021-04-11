@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
 	if (caller === nodeData.id) {
 		logger.info('starting new election');
 	} else {
-		logger.debug(`got election message from ${caller}`);
+		logger.verbose(`got election message from ${caller}`);
 	}
 
 	if (nodeData.participatedElections.has(electionId)) {
