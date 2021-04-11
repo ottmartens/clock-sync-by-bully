@@ -126,6 +126,8 @@ module.exports = {
 				}
 
 				// TODO: pass updated nodes list to existing nodes (might contain previously nonexisting nodes)
+                // probably all clock syncing intervals should be restarted (because if more nodes are added then the interval duration should change)
+                
 			}
 
 			state.nodes = nodes.map(({ id }) => Number(id));
