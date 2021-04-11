@@ -2,12 +2,11 @@ const nodeData = require('../../nodeData');
 
 module.exports = (req, res) => {
 	if (!nodeData.isCoordinator) {
-		res.status(403).send('not the coordinator');
+		// send "forbidden"
+		res.sendStatus(403);
 
 		return;
 	}
 
-
-    res.send(nodeData.time)
-    
+	res.send(nodeData.time);
 };
