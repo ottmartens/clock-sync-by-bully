@@ -4,8 +4,6 @@ const clockSync = require('../../clockSyncCron');
 module.exports = (req, res) => {
 	let response;
 
-	// TODO: make sure all endpoints are unresponsive when node is frozen (except unfreeze, reload, etc)
-
 	if (!nodeData.isFrozen) {
 		nodeData.stopClock();
 		clockSync.stop();
