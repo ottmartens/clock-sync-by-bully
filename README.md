@@ -1,15 +1,20 @@
-## Bully election algorithm + clock syncing
----
+# Bully election algorithm + clock syncing
 
-### Prerequisites
+## Prerequisites
 
 - NodeJS >= 12.0
 
 run `npm install`
 
-### Start
+## Start
 
-`npm start input.txt`
+### with verbose logging:
+
+`npm start <input.txt> debug`
+
+### more quiet:
+
+`` more quiet `npm start <input.txt>``
 
 Wait for the bootstrapping process to finish. After that, commands can be executed.
 
