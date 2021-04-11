@@ -13,12 +13,6 @@ module.exports = async (req, res) => {
 	const caller = Number(req.body.caller);
 	const electionId = req.body.electionId;
 
-	if (nodeData.isFrozen) {
-		// Send 'Service Unavailable'
-		res.sendStatus(503);
-		return;
-	}
-
 	if (caller < nodeData.id) {
 		res.send('ok');
 	}
@@ -70,7 +64,6 @@ async function pingAllLargerNodes(electionId) {
 }
 
 async function broadcastNewCoordinator() {
-	console.log(nodeData.nodeIds.filter((id) => id < nodeData.id));
 	Promise.all(
 		nodeData.nodeIds
 			.filter((id) => id < nodeData.id)
