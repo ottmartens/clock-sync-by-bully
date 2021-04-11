@@ -4,6 +4,7 @@ const {
 } = require('../utils');
 
 const nodeData = require('./nodeData');
+const startElection = require('./startElection');
 
 const CLOCK_SYNC_FREQUENCY = nodeData.nodeIds.length; // seconds;
 
@@ -21,16 +22,20 @@ function stopInterval() {
 }
 
 module.exports = {
-	start: startInterval(),
-	stop: stopInterval(),
+	start: startInterval,
+	stop: stopInterval,
 };
 
 function syncClock() {
 	if (!nodeData.coordinator) {
 		logger.debug('no coordinator, starting election');
+		stopInterval();
+
+		startElection();
 
 		// pause sync, start election
 	} else {
+		logger.debug('syncinc clock');
 		// ping coordinator for time
 		// if no reply, start election
 	}

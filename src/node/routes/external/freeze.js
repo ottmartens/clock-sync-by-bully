@@ -4,6 +4,7 @@ module.exports = (req, res) => {
 	let response;
 
 	// TODO: make sure all endpoints are unresponsive when node is frozen (except unfreeze, reload, etc)
+    // also pause clock sync
 
 	if (!nodeData.isFrozen) {
 		nodeData.stopClock();

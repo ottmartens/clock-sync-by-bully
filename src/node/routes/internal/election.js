@@ -5,6 +5,8 @@ const {
 	logger,
 } = require('../../../utils');
 
+const clockSync = require('../../clockSyncCron');
+
 const nodeData = require('../../nodeData');
 
 module.exports = async (req, res) => {
@@ -31,6 +33,8 @@ module.exports = async (req, res) => {
 		// logger.info('stopping cause already election message passed on');
 		return;
 	}
+
+	clockSync.stop();
 
 	nodeData.participatedElections.add(electionId);
 
