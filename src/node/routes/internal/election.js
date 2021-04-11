@@ -44,7 +44,9 @@ module.exports = async (req, res) => {
 		setTimeout(() => {
 			logger.info('will become next coordinator');
 			nodeData.coordinator = nodeData.id;
+
 			broadcastNewCoordinator();
+			nodeData.startClock(); // coordinator will keep track of the "real" time
 		}, 200);
 	}
 };

@@ -16,7 +16,7 @@ module.exports = createLogger({
 			const nodeId = process.env.id;
 
 			if (nodeId) {
-				return `${timestamp} ${`[${level}]`.padEnd(18)} Node ${nodeId.padEnd(
+				return `${timestamp} ${`[${level}]`.padEnd(20)} Node ${nodeId.padEnd(
 					4
 				)} ${message}`;
 			}

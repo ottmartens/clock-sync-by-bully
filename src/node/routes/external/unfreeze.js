@@ -5,7 +5,6 @@ module.exports = (req, res) => {
 
 	if (nodeData.isFrozen) {
 		nodeData.time = process.env.time;
-		nodeData.startClock();
 		nodeData.isFrozen = false
 
 		response = `Process ${nodeData.name} was unfrozen! Time is ${nodeData.time}`;

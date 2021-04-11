@@ -42,7 +42,7 @@ async function syncClock() {
 		startElection();
 	} else {
 		try {
-			await pingCoordinatorForClock();
+			await pingCoordinatorForTime();
 		} catch (err) {
 			logger.warn('pinging coordinator failed');
 			startElection();
@@ -50,10 +50,12 @@ async function syncClock() {
 	}
 }
 
-async function pingCoordinatorForClock() {
-	const { data } = await axios.get(
-		`${getUrlForNode(nodeData.coordinator)}/internal/clock`
+async function pingCoordinatorForTime() {
+	const { data: coordinatorTime } = await axios.get(
+		`${getUrlForNode(nodeData.coordinator)}/time`
 	);
 
-	logger.debug('got time from coordinator: ' + data);
+	logger.debug('got time from coordinator: ' + coordinatorTime);
+
+	nodeData.time = coordinatorTime;
 }
