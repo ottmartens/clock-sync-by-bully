@@ -130,6 +130,12 @@ module.exports = {
 
 			}
 
+			const oldNodes = state.nodes.filter(oldNode => !newNodeIds.find(newNode => newNode == oldNode));
+
+			logger.info(oldNodes)
+
+			oldNodes.forEach(async oldNode => { axios.post(`${getUrlForNode(oldNode)}/kill`); await delay(50) })
+
 			state.nodes = newNodeIds;
 
 			await delay(500);
