@@ -21,7 +21,7 @@ async function bootstrap() {
 
 	state.nodes = nodeIds;
 
-	await delay(1700);
+	await delay(4000);
 }
 
 async function main() {

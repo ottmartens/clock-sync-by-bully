@@ -68,6 +68,9 @@ module.exports = {
 	get isFrozen() {
 		return nodeData.isFrozen;
 	},
+	set nodeIds(newNodeIds) {
+		nodeData.nodeIds = newNodeIds;
+	},
 	get nodeIds() {
 		return nodeData.nodeIds;
 	},

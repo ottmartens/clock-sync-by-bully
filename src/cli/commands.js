@@ -118,19 +118,19 @@ module.exports = {
 			const inputFile = process.argv[2];
 
 			const nodes = await parseInputFile(inputFile);
-
+			const newNodeIds = nodes.map(({ id }) => Number(id));
 			for (const node of nodes) {
 				if (!state.nodes.find((oldNode) => oldNode === Number(node.id))) {
-					spawnNode(node);
+					spawnNode(node, newNodeIds);
 					await delay(50);
 				}
 
 				// TODO: pass updated nodes list to existing nodes (might contain previously nonexisting nodes)
-                // probably all clock syncing intervals should be restarted (because if more nodes are added then the interval duration should change)
-                
+				// probably all clock syncing intervals should be restarted (because if more nodes are added then the interval duration should change)
+
 			}
 
-			state.nodes = nodes.map(({ id }) => Number(id));
+			state.nodes = newNodeIds;
 
 			await delay(500);
 		},

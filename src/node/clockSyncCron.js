@@ -13,16 +13,18 @@ let interval = null;
 let running = false;
 
 async function startInterval() {
-	const startedInterval = Math.random().toString(16).substr(2, 8); //random string
+	if (interval == null) {
+		const startedInterval = Math.random().toString(16).substr(2, 8); //random string
 
-	running = startedInterval;
-	await delay((nodeData.nodeIds.indexOf(nodeData.id) + 1) * 1000);
+		running = startedInterval;
+		await delay((nodeData.nodeIds.indexOf(nodeData.id) + 1) * 1000);
 
-	// run the scheduled function immediately (without waiting for first interval time), if not stopped during the delay
-	if (running === startedInterval) {
-		logger.debug('starting clock sync');
-		syncClock();
-		interval = setInterval(syncClock, CLOCK_SYNC_FREQUENCY * 1000);
+		// run the scheduled function immediately (without waiting for first interval time), if not stopped during the delay
+		if (running === startedInterval) {
+			logger.debug('starting clock sync');
+			syncClock();
+			interval = setInterval(syncClock, CLOCK_SYNC_FREQUENCY * 1000);
+		}
 	}
 }
 
@@ -30,6 +32,7 @@ function stopInterval() {
 	logger.debug('stopping clock sync');
 	running = false;
 	clearInterval(interval);
+	interval = null
 }
 
 module.exports = {

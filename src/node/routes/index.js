@@ -27,4 +27,5 @@ module.exports = (app) => {
 	app.post('/election', require('./internal/election'));
 	app.post('/new-coordinator', require('./internal/newCoordinator'));
 	app.get('/time', require('./internal/time'));
+	app.post('/nodeIds', require('./internal/nodeIds'));
 };
